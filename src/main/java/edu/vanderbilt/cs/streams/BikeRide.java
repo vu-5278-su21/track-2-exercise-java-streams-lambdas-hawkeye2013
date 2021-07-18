@@ -173,14 +173,26 @@ public class BikeRide {
     //
     public Stream<DataFrame> fusedFramesStream() {
 
-        ArrayList<DataFrame> DFList = new ArrayList<>();
+//        Original Solution
+//        ArrayList<DataFrame> DFList = new ArrayList<>();
+//
+//        for (int i = 0; i < this.heartRate.length; i++) {
+//            DFList.add(new DataFrame(this.coordinates[i], this.grade[i], this.altitude[i], this.velocity[i], this.heartRate[i]));
+//        }
+//
+//        return DFList.stream();
 
-        for (int i = 0; i < this.heartRate.length; i++) {
-            DFList.add(new DataFrame(this.coordinates[i], this.grade[i], this.altitude[i], this.velocity[i], this.heartRate[i]));
-        }
-
-        return DFList.stream();
-
+        // Help from Austin Hunt, way cleaner than the original one, removes the for loop
+        return IntStream.range(0, this.heartRate.length)
+            .mapToObj(index -> {
+                return new DataFrame(
+                        this.coordinates[index],
+                        this.grade[index],
+                        this.altitude[index],
+                        this.velocity[index],
+                        this.heartRate[index]
+                );
+            });
     }
 
 
